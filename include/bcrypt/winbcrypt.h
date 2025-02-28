@@ -2,6 +2,7 @@
 #define __WIN_BCRYPT__H
 
 #include <iostream>
+#include <stdexcept>
 
 #include "crypt_blowfish.h"
 #include "./bcrypt.h"
@@ -13,9 +14,9 @@ public:
 		char hash[BCRYPT_HASHSIZE];
 		int ret;
 		ret = bcrypt_gensalt(workload, salt);
-		if (ret != 0)throw std::runtime_error{ "bcrypt: can not generate salt" };
+                if (ret != 0)throw std::runtime_error{ "bcrypt: can not generate salt" };
 		ret = bcrypt_hashpw(password.c_str(), salt, hash);
-		if (ret != 0)throw std::runtime_error{ "bcrypt: can not generate hash" };
+                if (ret != 0)throw std::runtime_error{ "bcrypt: can not generate hash" };
 		return std::string{ hash };
 	}
 
