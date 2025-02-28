@@ -20,6 +20,7 @@ enable_language(ASM)
 set(MYLIB_VERSION_MAJOR 1)
 set(MYLIB_VERSION_MINOR 0)
 set(MYLIB_VERSION_PATCH 0)
+set(BUILD_SHARED_LIBS 1)
 set(MYLIB_VERSION_STRING ${MYLIB_VERSION_MAJOR}.${MYLIB_VERSION_MINOR}.${MYLIB_VERSION_PATCH})
 
 # just doing cmake . will build a shared or static lib and honor existing environment setting
