@@ -39,3 +39,16 @@ build this with something like this:
 ```bash
 g++ --std=c++11 -lbcrypt main.cpp
 ```
+
+## Qt actual compilation
+
+- Open CMakeLists.txt with Qt5.12.12.
+- As toolchain select only Qt5.12.12 Ming32 bit.
+- Compile.
+
+- Open CMakeLists.txt with Qt5.5.1.
+- As toolchain select only Qt5.5.1 Ming32 bit.
+- Compile.
+(usually qt creator of qt 5.12.12 builds smoothly also with mingw compiler of qt 5.5.1, but in this case there is an incompatibility of path generation, so we have to use different QtCreators!).
+
+- TODO: Make msvc15 compilation work.
