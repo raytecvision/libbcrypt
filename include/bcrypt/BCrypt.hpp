@@ -2,6 +2,8 @@
 #define __BCRYPT__
 
 #ifdef _WIN32
+#include "winbcrypt.h"
+#else
 
 #include "bcrypt.h"
 #include <string>
