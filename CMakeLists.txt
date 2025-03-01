@@ -20,7 +20,11 @@ enable_language(ASM)
 set(MYLIB_VERSION_MAJOR 1)
 set(MYLIB_VERSION_MINOR 0)
 set(MYLIB_VERSION_PATCH 0)
-set(BUILD_SHARED_LIBS 1)
+if (MSVC)
+    set(BUILD_SHARED_LIBS Off)
+else ()
+    set(BUILD_SHARED_LIBS On)
+endif ()
 set(MYLIB_VERSION_STRING ${MYLIB_VERSION_MAJOR}.${MYLIB_VERSION_MINOR}.${MYLIB_VERSION_PATCH})
 
 # just doing cmake . will build a shared or static lib and honor existing environment setting
@@ -41,13 +45,22 @@ set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -O3" )
 
 set( CMAKE_ASM_FLAGS "${CXXFLAGS} -x assembler-with-cpp")
 
-set( SRCFILES
-	${CMAKE_CURRENT_SOURCE_DIR}/src/bcrypt.c
-	${CMAKE_CURRENT_SOURCE_DIR}/src/crypt_blowfish.c
-	${CMAKE_CURRENT_SOURCE_DIR}/src/crypt_gensalt.c
-	${CMAKE_CURRENT_SOURCE_DIR}/src/wrapper.c
-	${CMAKE_CURRENT_SOURCE_DIR}/src/x86.S
+if (MSVC)
+    set( SRCFILES
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/bcrypt.c
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/crypt_blowfish.c
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/crypt_gensalt.c
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/wrapper.c
 )
+else ()
+    set( SRCFILES
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/bcrypt.c
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/crypt_blowfish.c
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/crypt_gensalt.c
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/wrapper.c
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/x86.S
+)
+endif ()
 
 if (NOT WIN32)
 	include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include/bcrypt)
