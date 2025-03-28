@@ -89,8 +89,13 @@ install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION "/opt/raytec/dev/lib"
     PUBLIC_HEADER DESTINATION "/opt/raytec/dev/include/bcrypt")
 
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION "/opt/raytec/dev/include/bcrypt"
-	FILES_MATCHING PATTERN "*.h")
+if (NOT WIN32)
+    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION "/opt/raytec/dev/include"
+            FILES_MATCHING PATTERN "*.h")
+else()
+    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+            FILES_MATCHING PATTERN "*.h")
+endif()
 
 SET(CPACK_GENERATOR "DEB")
 SET(CPACK_SET_DESTDIR ON)
