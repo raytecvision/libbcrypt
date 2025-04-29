@@ -26,7 +26,7 @@ set(MYLIB_VERSION_STRING ${MYLIB_VERSION_MAJOR}.${MYLIB_VERSION_MINOR}.${MYLIB_V
 # to force build static, cmake . -DBUILD_SHARED_LIBS=Off
 # to force build shared, cmake . -DBUILD_SHARED_LIBS=On
 
-set(BUILD_SHARED_LIBS On)
+set(BUILD_SHARED_LIBS Off)
 
 if (NOT BUILD_SHARED_LIBS)
 	message ("Building a static library")
@@ -61,39 +61,70 @@ endif ()
 
 if (NOT WIN32)
 	include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include/bcrypt)
+else()
+        include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include)
 endif()
 
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-add_library(
-	${PROJECT_NAME}
-	${SRCFILES}
-)
-
-set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${MYLIB_VERSION_STRING} SOVERSION ${MYLIB_VERSION_MAJOR})
-
-set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER include/bcrypt/BCrypt.hpp)
-
-target_include_directories(${PROJECT_NAME} PRIVATE include)
-target_include_directories(${PROJECT_NAME} PRIVATE src)
+if (NOT WIN32)
+    add_library(${PROJECT_NAME} SHARED ${SRCFILES})
+    set_target_properties(${PROJECT_NAME}d PROPERTIES VERSION ${MYLIB_VERSION_STRING} SOVERSION ${MYLIB_VERSION_MAJOR})
+    set_target_properties(${PROJECT_NAME}d PROPERTIES PUBLIC_HEADER include/bcrypt/BCrypt.hpp)
+    target_include_directories(${PROJECT_NAME} PRIVATE include)
+    target_include_directories(${PROJECT_NAME} PRIVATE src)
+else()
+    add_library(${PROJECT_NAME}_shared SHARED ${SRCFILES})
+    add_library(${PROJECT_NAME}_static STATIC ${SRCFILES})
+    set_target_properties(${PROJECT_NAME}_shared PROPERTIES VERSION ${MYLIB_VERSION_STRING} SOVERSION ${MYLIB_VERSION_MAJOR})
+    set_target_properties(${PROJECT_NAME}_shared PROPERTIES PUBLIC_HEADER include/bcrypt/BCrypt.hpp)
+    set_target_properties(${PROJECT_NAME}_shared PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+    target_include_directories(${PROJECT_NAME}_shared PRIVATE include)
+    target_include_directories(${PROJECT_NAME}_shared PRIVATE src)
+    set_target_properties(${PROJECT_NAME}_static PROPERTIES VERSION ${MYLIB_VERSION_STRING} SOVERSION ${MYLIB_VERSION_MAJOR})
+    set_target_properties(${PROJECT_NAME}_static PROPERTIES PUBLIC_HEADER include/bcrypt/BCrypt.hpp)
+    set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+    target_include_directories(${PROJECT_NAME}_static PRIVATE include)
+    target_include_directories(${PROJECT_NAME}_static PRIVATE src)
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        set_target_properties(${PROJECT_NAME}_shared PROPERTIES OUTPUT_NAME ${PROJECT_NAME}d)
+        set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME}d)
+        message("-- Bullet: Debug build")
+    elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+        set_target_properties(${PROJECT_NAME}_shared PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+        set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+        message("-- Bullet: Release build")
+    endif()
+endif()
 
 add_executable( ${PROJECT_NAME}_test ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
-target_link_libraries( ${PROJECT_NAME}_test ${PROJECT_NAME})
+target_link_libraries( ${PROJECT_NAME}_test ${PROJECT_NAME}_static)
 
 include(GNUInstallDirs)
 
-install(TARGETS ${PROJECT_NAME}
-    LIBRARY DESTINATION "/opt/raytec/dev/lib"
-    ARCHIVE DESTINATION "/opt/raytec/dev/lib"
-    RUNTIME DESTINATION "/opt/raytec/dev/lib"
-    PUBLIC_HEADER DESTINATION "/opt/raytec/dev/include/bcrypt")
+if (NOT WIN32)
+    install(TARGETS ${PROJECT_NAME}
+        LIBRARY DESTINATION "/opt/raytec/dev/lib"
+        ARCHIVE DESTINATION "/opt/raytec/dev/lib"
+        RUNTIME DESTINATION "/opt/raytec/dev/lib"
+        PUBLIC_HEADER DESTINATION "/opt/raytec/dev/include/bcrypt")
+else()
+    install(TARGETS ${PROJECT_NAME}_shared
+        LIBRARY DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/vc15/lib"
+        ARCHIVE DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/vc15/lib"
+        RUNTIME DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/vc15/lib"
+        PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/include/bcrypt")
+    install(TARGETS ${PROJECT_NAME}_static
+        LIBRARY DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/vc15/lib"
+        ARCHIVE DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/vc15/lib"
+        RUNTIME DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/vc15/lib"
+        PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/include/bcrypt")
+endif()
 
 if (NOT WIN32)
     install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION "/opt/raytec/dev/include"
             FILES_MATCHING PATTERN "*.h")
 else()
-    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/include"
             FILES_MATCHING PATTERN "*.h")
 endif()
 

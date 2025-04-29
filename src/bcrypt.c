@@ -33,7 +33,7 @@ typedef __int64 ssize_t;
 
 #include "../include/bcrypt/bcrypt.h"
 
-#include <windows.h>
+#include <Windows.h>
 #include <wincrypt.h> /* CryptAcquireContext, CryptGenRandom */
 #else
 #include "bcrypt.h"
