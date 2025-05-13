@@ -1,4 +1,8 @@
-#include "bcrypt/BCrypt.hpp"
+#ifdef _WIN32
+    #include "bcrypt/BCrypt.hpp.h"
+#else
+    #include "BCrypt.hpp"
+#endif
 #include <iostream>
 
 int main(){

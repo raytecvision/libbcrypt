@@ -60,15 +60,15 @@ else ()
 endif ()
 
 if (NOT WIN32)
-	include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include/bcrypt)
+        include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include/bcrypt)
 else()
         include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include)
 endif()
 
 if (NOT WIN32)
     add_library(${PROJECT_NAME} SHARED ${SRCFILES})
-    set_target_properties(${PROJECT_NAME}d PROPERTIES VERSION ${MYLIB_VERSION_STRING} SOVERSION ${MYLIB_VERSION_MAJOR})
-    set_target_properties(${PROJECT_NAME}d PROPERTIES PUBLIC_HEADER include/bcrypt/BCrypt.hpp)
+    set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${MYLIB_VERSION_STRING} SOVERSION ${MYLIB_VERSION_MAJOR})
+    set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER include/bcrypt/BCrypt.hpp)
     target_include_directories(${PROJECT_NAME} PRIVATE include)
     target_include_directories(${PROJECT_NAME} PRIVATE src)
 else()
@@ -97,7 +97,12 @@ endif()
 
 add_executable( ${PROJECT_NAME}_test ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
-target_link_libraries( ${PROJECT_NAME}_test ${PROJECT_NAME}_static)
+
+if (NOT WIN32)
+    target_link_libraries( ${PROJECT_NAME}_test ${PROJECT_NAME})
+else()
+    target_link_libraries( ${PROJECT_NAME}_test ${PROJECT_NAME}_static)
+endif()
 
 include(GNUInstallDirs)
 
