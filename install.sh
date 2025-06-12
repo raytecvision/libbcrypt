@@ -21,8 +21,5 @@ echo ${project_name}
 build_path=build-${project_name}-Desktop-${make_tag}
 
 cd ..
-mkdir -p ${build_path}
 cd ${build_path}
-/usr/bin/cmake ../libbcrypt '-GCodeBlocks - Unix Makefiles'
-make clean
-make -j8
+make install
