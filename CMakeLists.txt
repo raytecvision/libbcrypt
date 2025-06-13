@@ -120,9 +120,9 @@ else()
             RUNTIME DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/lib"
             PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/include/bcrypt")
         install(TARGETS ${PROJECT_NAME}_static
-            LIBRARY DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/vc15/lib"
-            ARCHIVE DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/vc15/lib"
-            RUNTIME DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/vc15/lib"
+            LIBRARY DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/lib"
+            ARCHIVE DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/lib"
+            RUNTIME DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/lib"
             PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/include/bcrypt")
     else()
         install(TARGETS ${PROJECT_NAME}_shared
@@ -131,9 +131,9 @@ else()
             RUNTIME DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/lib"
             PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/include/bcrypt")
         install(TARGETS ${PROJECT_NAME}_static
-            LIBRARY DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/vc15/lib"
-            ARCHIVE DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/vc15/lib"
-            RUNTIME DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/vc15/lib"
+            LIBRARY DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/lib"
+            ARCHIVE DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/lib"
+            RUNTIME DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/lib"
             PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/include/bcrypt")
     endif()
 endif()

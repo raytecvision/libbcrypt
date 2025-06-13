@@ -1,5 +1,5 @@
 #ifdef _WIN32
-    #include "bcrypt/BCrypt.hpp.h"
+	#include "bcrypt/BCrypt.hpp"
 #else
     #include "BCrypt.hpp"
 #endif
