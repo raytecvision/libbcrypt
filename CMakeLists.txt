@@ -123,7 +123,7 @@ else()
             LIBRARY DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/lib"
             ARCHIVE DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/lib"
             RUNTIME DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/lib"
-            PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/include/bcrypt")
+            PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/include/bcrypt")
     else()
         install(TARGETS ${PROJECT_NAME}_shared
             LIBRARY DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/lib"
@@ -134,7 +134,7 @@ else()
             LIBRARY DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/lib"
             ARCHIVE DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/lib"
             RUNTIME DESTINATION "C:/Raytec-Dev-3/mingw/x86/5.5.1/libbcrypt/lib"
-            PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/include/bcrypt")
+            PUBLIC_HEADER DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/include/bcrypt")
     endif()
 endif()
 
@@ -142,7 +142,7 @@ if (NOT WIN32)
     install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION "/opt/raytec/dev/include"
             FILES_MATCHING PATTERN "*.h")
 else()
-    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/bcrypt/include"
+    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION "C:/Raytec-Dev-3/msvc/x64/5.12.12/libbcrypt/include"
             FILES_MATCHING PATTERN "*.h")
 endif()
 
