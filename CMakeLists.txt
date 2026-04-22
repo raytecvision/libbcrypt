@@ -108,10 +108,10 @@ include(GNUInstallDirs)
 
 if (NOT WIN32)
     install(TARGETS ${PROJECT_NAME}
-        LIBRARY DESTINATION "/opt/raytec/dev/lib"
-        ARCHIVE DESTINATION "/opt/raytec/dev/lib"
-        RUNTIME DESTINATION "/opt/raytec/dev/lib"
-        PUBLIC_HEADER DESTINATION "/opt/raytec/dev/include/bcrypt")
+        LIBRARY DESTINATION "/opt/raytec/raydev/lib"
+        ARCHIVE DESTINATION "/opt/raytec/raydev/lib"
+        RUNTIME DESTINATION "/opt/raytec/raydev/lib"
+        PUBLIC_HEADER DESTINATION "/opt/raytec/raydev/include/bcrypt")
 else()
     if (MSVC)
         install(TARGETS ${PROJECT_NAME}_shared
@@ -139,7 +139,7 @@ else()
 endif()
 
 if (NOT WIN32)
-    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION "/opt/raytec/dev/include"
+    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION "/opt/raytec/raydev/include"
             FILES_MATCHING PATTERN "*.h")
 else()
     if (MSVC)
